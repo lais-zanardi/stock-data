@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/alphavantage")
+@RequestMapping("/api/alpha-vantage")
 public class AlphaVantageController {
 
     private final AlphaVantageService alphaVantageService;

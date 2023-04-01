@@ -11,9 +11,8 @@ import java.time.LocalDate;
 @Entity
 public class StockData {
     @Id
-    private Long id;
-    private String name;
     private String symbol;
+    private String name;
     private BigDecimal price;
     private Integer volume;
     private LocalDate date;

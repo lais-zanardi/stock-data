@@ -1,41 +1,49 @@
 package zanardil;
 
+import jakarta.ws.rs.WebApplicationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import zanardil.stockdata.exceptions.StockDataNotFoundException;
+import org.springframework.web.client.RestClientException;
 
 import java.util.List;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class StockDataService {
         @Autowired
         private StockDataRepository stockDataRepository;
+        private final AlphaVantageAPIClient alphaVantageApiClient;
+
+        public void saveData(StockData data) {
+            try {
+
+                if(!alphaVantageApiClient.isAvaiable(data.getSymbol())) {
+                    throw new StockNotFoundException(data.getName(), data.getSymbol());
+                }
+            } catch (RestClientException e) {
+                throw new WebApplicationException();
+            }
+
+            stockDataRepository.save(data);
+        }
 
         public List<StockData> getAllStockData() {
             return stockDataRepository.findAll();
         }
 
-        public StockData getStockDataById(Long id) {
-            return stockDataRepository.findById(id).orElseThrow(() -> new StockDataNotFoundException("StockData", "id"));
+
+
+        public Optional<StockData> getDataById(String symbol) {
+            return stockDataRepository.findById(symbol);
         }
 
-        public StockData createStockData(StockData stockData) {
-            return stockDataRepository.save(stockData);
-        }
 
-        public StockData updateStockData(Long id, StockData stockDataDetails) {
-            StockData stockData = stockDataRepository.findById(id).orElseThrow(() -> new StockDataNotFoundException("StockData", "id"));
-
-            stockData.setSymbol(stockDataDetails.getSymbol());
-            stockData.setPrice(stockDataDetails.getPrice());
-            stockData.setVolume(stockDataDetails.getVolume());
-            stockData.setDate(stockDataDetails.getDate());
-
-            return stockDataRepository.save(stockData);
-        }
-
-        public void deleteStockData(Long id) {
-            StockData stockData = stockDataRepository.findById(id).orElseThrow(() -> new StockDataNotFoundException("StockData", "id"));
+        public void deleteStockData(String symbol) {
+            StockData stockData = stockDataRepository.findById(symbol)
+                    .orElseThrow(() -> new StockNotFoundException("Stock not found for symbol: ", symbol));
             stockDataRepository.delete(stockData);
         }
+
 }
