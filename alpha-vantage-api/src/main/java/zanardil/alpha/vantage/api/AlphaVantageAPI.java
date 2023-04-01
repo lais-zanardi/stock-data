@@ -1,20 +1,17 @@
-package zanardil.stockdata.model;
+package zanardil.alpha.vantage.api;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Data;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-@Entity
-public class StockData {
-    @Id
-    private Long id;
+public class AlphaVantageAPI {
     private String name;
     private String symbol;
     private BigDecimal price;
     private Integer volume;
     private LocalDate date;
+
 }

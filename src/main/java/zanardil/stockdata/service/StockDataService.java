@@ -19,7 +19,7 @@ public class StockDataService {
         }
 
         public StockData getStockDataById(Long id) {
-            return stockDataRepository.findById(id).orElseThrow(() -> new StockDataNotFoundException("StockData", "id", id));
+            return stockDataRepository.findById(id).orElseThrow(() -> new StockDataNotFoundException("StockData", "id"));
         }
 
         public StockData createStockData(StockData stockData) {
@@ -27,7 +27,7 @@ public class StockDataService {
         }
 
         public StockData updateStockData(Long id, StockData stockDataDetails) {
-            StockData stockData = stockDataRepository.findById(id).orElseThrow(() -> new StockDataNotFoundException("StockData", "id", id));
+            StockData stockData = stockDataRepository.findById(id).orElseThrow(() -> new StockDataNotFoundException("StockData", "id"));
 
             stockData.setSymbol(stockDataDetails.getSymbol());
             stockData.setPrice(stockDataDetails.getPrice());
@@ -38,7 +38,7 @@ public class StockDataService {
         }
 
         public void deleteStockData(Long id) {
-            StockData stockData = stockDataRepository.findById(id).orElseThrow(() -> new StockDataNotFoundException("StockData", "id", id));
+            StockData stockData = stockDataRepository.findById(id).orElseThrow(() -> new StockDataNotFoundException("StockData", "id"));
             stockDataRepository.delete(stockData);
         }
 }
