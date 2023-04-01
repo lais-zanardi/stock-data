@@ -1,7 +1,6 @@
-package zanardil.stockdata.repository;
+package zanardil;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import zanardil.stockdata.model.StockData;
 
 public interface StockDataRepository extends JpaRepository<StockData, Long> {
 }

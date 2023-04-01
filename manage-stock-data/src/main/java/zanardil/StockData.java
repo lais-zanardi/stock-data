@@ -1,4 +1,4 @@
-package zanardil.stockdata.model;
+package zanardil;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
